@@ -28,7 +28,7 @@ class AdventureLevelApp:
 
     def carregar_widgets(self):
         # Botão principal
-        self.botao_imagem = ImageTk.PhotoImage(Image.open("assets/start_button.png").resize((200, 50)))
+        self.botao_imagem = ImageTk.PhotoImage(Image.open("assets/start_button.png").resize((50, 50)))
         self.botao_iniciar = tk.Button(
             self.root,
             image=self.botao_imagem,
@@ -121,13 +121,22 @@ class AdventureLevelApp:
         niveis_label.place(x=10, y=70)
 
     def exibir_erro(self, mensagem):
-        largura = self.root.winfo_width()
-        altura = self.root.winfo_height()
-        popup = tk.Toplevel(self.root)
-        popup.geometry(f"350x150+{largura//2-175}+{altura//2-75}")
-        popup.configure(bg="#2b2b2b")
+        # Centralizando o popup com base na posição da janela principal
+        largura_janela = self.root.winfo_width()
+        altura_janela = self.root.winfo_height()
+        x_janela = self.root.winfo_x()
+        y_janela = self.root.winfo_y()
 
+        largura_popup = 350
+        altura_popup = 150
+        x_centralizado = x_janela + (largura_janela - largura_popup) // 2
+        y_centralizado = y_janela + (altura_janela - altura_popup) // 2
+
+        popup = tk.Toplevel(self.root)
+        popup.geometry(f"{largura_popup}x{altura_popup}+{x_centralizado}+{y_centralizado}")
+        popup.configure(bg="#2b2b2b")
         popup.title("Aviso ⚠️")
+
         erro_label = tk.Label(
             popup,
             text=mensagem,
